@@ -1,0 +1,43 @@
+---
+pagination:
+  data: blogposts
+  size: 2
+  alias: pagedBlogposts
+permalink: blog/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1 }}/{% endif %}/index.html
+---
+
+{% extends "_layouts/base.njk" %}
+{% set htmlTitle = "Home" %}
+
+{% block content %}
+  <h1>Archives</h1>
+
+  {% for post in pagedBlogposts %}
+    {% if loop.first %}<ul>{% endif %}
+      <li>
+        <article>
+          <a href="/blog/{{ post.slug }}">
+            <img src="{{ post.image.thumb }}" alt="{{ post.image.alt }}">
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.intro }}</p>
+          </a>
+        </article>
+      </li>
+    {% if loop.last %}</ul>{% endif %}
+  {% endfor %}
+
+  {% if pagination.pages | length > 0 %}
+    <ul>
+      {% if pagination.href.previous %}
+      <li><a href="{{ pagination.href.previous }}">Previous</a></li>
+      {% else %}
+      <li>Previous</li>
+      {% endif %}
+      {% if pagination.href.next %}
+      <li><a href="{{ pagination.href.next }}">Next</a></li>
+      {% else %}
+      <li>Next</li>
+      {% endif %}
+    </ul>
+  {% endif %}
+{% endblock %}

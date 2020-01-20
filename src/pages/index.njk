@@ -1,0 +1,25 @@
+---
+permalink: "/index.html"
+---
+
+{% extends "_layouts/base.njk" %}
+{% set htmlTitle = "Home" %}
+
+{% block content %}
+  <h1>Homepage</h1>
+
+  {% for post in blogposts | limit(4) %}
+    {% if loop.first %}<ul>{% endif %}
+      <li>
+        <article>
+          <a href="/blog/{{ post.slug }}">
+            <img src="{{ post.image.thumb }}" alt="{{ post.image.alt }}">
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.intro }}</p>
+          </a>
+        </article>
+      </li>
+    {% if loop.last %}</ul>{% endif %}
+
+  {% endfor %}
+{% endblock %}

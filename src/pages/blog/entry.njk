@@ -1,0 +1,23 @@
+---
+pagination:
+  data: blogposts
+  size: 1
+  alias: blogpost
+permalink: blog/{{ blogpost.slug }}/index.html
+---
+
+{% extends "_layouts/base.njk" %}
+{% set htmlTitle = "Blog - " ~ blogpost.title %}
+
+{% block content %}
+
+    <img src="{{ blogpost.image.big }}"
+         alt="{{ blogpost.image.alt }}">
+    <h1>{{ blogpost.title }}</h1>
+    <p><time datetime="{{ blogpost.date }}">{{ blogpost.date | date("MMMM Do, YYYY") }}</time></p>
+    <p>{{ blogpost.intro }}</p>
+    <div class="c-wysiwyg">
+      {{ blogpost.body | safe }}
+    </div>
+
+{% endblock %}

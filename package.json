@@ -1,0 +1,20 @@
+{
+  "name": "eleventy-craft-graphql",
+  "version": "1.0.0",
+  "description": "Testing Craft CMS GraphQL API with Eleventy",
+  "main": "index.js",
+  "scripts": {
+    "del": "del-cli ./dist",
+    "serve": "eleventy --serve --port=3000",
+    "build": "npm run del && eleventy --quiet"
+  },
+  "author": "Jérôme Coupé",
+  "license": "MIT",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.10.0",
+    "axios": "^0.19.1",
+    "del-cli": "^3.0.0",
+    "dotenv": "^8.2.0",
+    "moment": "^2.24.0"
+  }
+}
