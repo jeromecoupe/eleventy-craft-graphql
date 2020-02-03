@@ -11,7 +11,12 @@ permalink: blog/{{ blogpost.slug }}/index.html
 
 {% block content %}
 
-    <img src="{{ blogpost.image.big }}"
+    <img src="{{ blogpost.image.small }}"
+         srcset="{{ blogpost.image.small }} 600w,
+                 {{ blogpost.image.medium }} 1024w,
+                 {{ blogpost.image.large }} 1440w"
+         sizes="100vw"
+         class="o-fluidimage"
          alt="{{ blogpost.image.alt }}">
     <h1>{{ blogpost.title }}</h1>
     <p><time datetime="{{ blogpost.date }}">{{ blogpost.date | date("MMMM Do, YYYY") }}</time></p>

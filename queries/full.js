@@ -1,0 +1,16 @@
+query getAllBlogposts {
+  entries (section: "blog", orderBy: "postDate DESC") {
+    id
+    title
+    postDate @formatDateTime (format: "Y-m-d")
+    ... on blog_blogpost_Entry {
+      commonIntro
+      commonBody
+      blogImage {
+        small: url @transform(width: 600, height: 450, immediately: true)
+      	medium: url @transform(width: 1024, height: 768, immediately: true)
+      	large: url @transform(width: 1440, height: 1080, immediately: true)
+      }
+    }
+  }
+}

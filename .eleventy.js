@@ -11,7 +11,10 @@ module.exports = function(eleventyConfig) {
     return moment(string).format(format);
   });
 
-  // return your config
+  // passthrough copy
+  eleventyConfig.addPassthroughCopy("src/assets/**/*");
+
+  // return config
   return {
     dir: {
       input: "./src",

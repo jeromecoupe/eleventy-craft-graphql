@@ -1,21 +1,44 @@
 require("dotenv").config();
 const axios = require("axios");
 const token = process.env.CRAFT_GRAPHQL_TOKEN;
+const endpointUrl = process.env.CRAFT_GRAPHQL_URL;
+const graphqlQuery = `
+query getAllBlogposts {
+  entries (
+    section: "blog",
+    orderBy: "postDate DESC"
+  ) {
+    postDate
+    title
+    slug
+    ... on blog_blogpost_Entry {
+      commonIntro
+      blogImage {
+        small: url @transform (width: 600, height: 450, immediately: true)
+        medium: url @transform (width: 1024, height: 768, immediately: true)
+        large: url @transform (width: 1440, height: 1080, immediately: true)
+        title: title
+      }
+      commonIntro
+      commonBody
+    }
+  }
+}
+`;
 
 /**
  * Format Data
- * @param {array} entriesArray - array of entry elements
+ * @param {array} entriesArray - array of entries
  */
 function formatData(entriesArray) {
   return entriesArray.map(item => ({
     date: item.postDate,
     title: item.title,
     slug: item.slug,
-    intro: item.commonIntroRich,
+    intro: item.commonIntro,
     image: {
       alt: item.blogImage[0].title,
-      thumb: item.blogImage[0].thumb,
-      big: item.blogImage[0].big,
+      large: item.blogImage[0].large,
       medium: item.blogImage[0].medium,
       small: item.blogImage[0].small
     },
@@ -28,45 +51,23 @@ function formatData(entriesArray) {
  */
 async function getAllBlogposts() {
   try {
-    const results = await axios({
+    const response = await axios({
       method: "post",
-      url: "http://graphql.craft.test/api",
+      url: `${endpointUrl}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`
       },
       data: {
-        query: `
-        {
-          entries (
-            section: "blog",
-            orderBy: "postDate ASC"
-          ) {
-            postDate @formatDateTime (format: "Y-m-d"),
-            title
-            slug
-            ... on blog_blogpost_Entry {
-              commonIntroRich
-              blogImage {
-                thumb: url @transform (width: 400, height:400, immediately: true),
-                big: url @transform (width: 1024, immediately: true),
-                medium: url @transform (width: 800, immediately: true),
-                small: url @transform (width: 600, immediately: true),
-                title: title
-              }
-              commonBody
-            }
-          }
-        }
-        `
+        query: graphqlQuery
       }
     });
 
     // get response
-    const response = await results.data;
+    const data = response.data;
 
     // handle Craft error messages
-    if (response.errors) {
+    if (data.errors) {
       response.errors.forEach(err => {
         console.log(err.message);
       });
@@ -75,8 +76,8 @@ async function getAllBlogposts() {
     }
 
     // format entries and return
-    if (response.data.entries) {
-      return formatData(response.data.entries);
+    if (data.data.entries) {
+      return formatData(data.data.entries);
     }
   } catch (error) {
     // general catch error
