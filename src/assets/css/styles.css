@@ -116,6 +116,7 @@ form {
 
 .c-container {
   margin: 0 auto;
+  padding-top: 2rem;
   padding-left: calc((24 / 16) * 1rem);
   padding-right: calc((24 / 16) * 1rem);
   max-width: 1440px;
@@ -151,6 +152,39 @@ form {
   line-height: 1.2;
   font-family: "Georgia", "Times New Roman", serif;
   color: #1c1c1c;
+}
+
+/* ---------------------------------------
+=pagination
+--------------------------------------- */
+
+.c-pagination {
+  list-style: none;
+  padding: 1rem 0 0;
+  margin: 3rem 0 1.5rem;
+
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.c-pagination__item {
+  color: #777777;
+}
+
+.c-pagination__item:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.c-pagination__link {
+  color: #1c1c1c;
+}
+
+.c-pagination__link > svg {
+  vertical-align: middle;
 }
 
 /* ---------------------------------------

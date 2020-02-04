@@ -2,7 +2,7 @@ query getAllBlogposts {
   entries (section: "blog", orderBy: "postDate DESC") {
     id
     title
-    postDate @formatDateTime (format: "Y-m-d")
+    postDate @formatDateTime(format: "Y-m-d")
     ... on blog_blogpost_Entry {
       commonIntro
       commonBody

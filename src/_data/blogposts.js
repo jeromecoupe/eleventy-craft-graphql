@@ -1,14 +1,16 @@
 require("dotenv").config();
 const axios = require("axios");
+
 const token = process.env.CRAFT_GRAPHQL_TOKEN;
 const endpointUrl = process.env.CRAFT_GRAPHQL_URL;
+
 const graphqlQuery = `
 query getAllBlogposts {
   entries (
     section: "blog",
     orderBy: "postDate DESC"
   ) {
-    postDate
+    postDate @formatDateTime (format: "Y-m-d")
     title
     slug
     ... on blog_blogpost_Entry {

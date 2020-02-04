@@ -24,16 +24,16 @@ permalink: blog/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber +
       {% endfor %}
 
       {% if pagination.pages | length > 0 %}
-        <ul>
+        <ul class="c-pagination">
           {% if pagination.href.previous %}
-          <li><a href="{{ pagination.href.previous }}">Previous</a></li>
+            <li class="c-pagination__item"><a class="pagination__link" href="{{ pagination.href.previous }}">{% include "_svg/arrow-left.svg" %}</a></li>
           {% else %}
-          <li>Previous</li>
+            <li class="c-pagination__item">{% include "_svg/arrow-left.svg" %}</li>
           {% endif %}
           {% if pagination.href.next %}
-          <li><a href="{{ pagination.href.next }}">Next</a></li>
+            <li class="c-pagination__item"><a class="pagination__link" href="{{ pagination.href.next }}">{% include "_svg/arrow-right.svg" %}</a></li>
           {% else %}
-          <li>Next</li>
+            <li class="c-pagination__item">{% include "_svg/arrow-right.svg" %}</li>
           {% endif %}
         </ul>
       {% endif %}

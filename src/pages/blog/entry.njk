@@ -18,11 +18,14 @@ permalink: blog/{{ blogpost.slug }}/index.html
          sizes="100vw"
          class="o-fluidimage"
          alt="{{ blogpost.image.alt }}">
-    <h1>{{ blogpost.title }}</h1>
-    <p><time datetime="{{ blogpost.date }}">{{ blogpost.date | date("MMMM Do, YYYY") }}</time></p>
-    <p>{{ blogpost.intro }}</p>
-    <div class="c-wysiwyg">
-      {{ blogpost.body | safe }}
+
+    <div class="c-container">
+      <h1>{{ blogpost.title }}</h1>
+      <p><time datetime="{{ blogpost.date }}">{{ blogpost.date | date("MMMM Do, YYYY") }}</time></p>
+      <p>{{ blogpost.intro }}</p>
+      <div class="c-wysiwyg">
+        {{ blogpost.body | safe }}
+      </div>
     </div>
 
 {% endblock %}
