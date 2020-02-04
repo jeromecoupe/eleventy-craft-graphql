@@ -1,9 +1,12 @@
+// load axios and dotenv
 require("dotenv").config();
 const axios = require("axios");
 
+// get credentials from .env
 const token = process.env.CRAFT_GRAPHQL_TOKEN;
 const endpointUrl = process.env.CRAFT_GRAPHQL_URL;
 
+// GraphQL Query
 const graphqlQuery = `
 query getAllBlogposts {
   entries (
@@ -32,6 +35,7 @@ query getAllBlogposts {
  * Format Data
  * @param {array} entriesArray - array of entries
  */
+
 function formatData(entriesArray) {
   return entriesArray.map(item => ({
     date: item.postDate,
@@ -51,6 +55,7 @@ function formatData(entriesArray) {
 /**
  * Get all blogposts from GraphQL API
  */
+
 async function getAllBlogposts() {
   try {
     const response = await axios({
@@ -87,4 +92,5 @@ async function getAllBlogposts() {
   }
 }
 
+// export JSON
 module.exports = getAllBlogposts;
