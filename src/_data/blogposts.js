@@ -9,23 +9,20 @@ const endpointUrl = process.env.CRAFT_GRAPHQL_URL;
 // GraphQL Query
 const graphqlQuery = `
 query getAllBlogposts {
-  entries (
-    section: "blog",
-    orderBy: "postDate DESC"
-  ) {
-    postDate @formatDateTime (format: "Y-m-d")
+  entries(section: "blog", orderBy: "postDate DESC") {
+    id
     title
     slug
+    postDate @formatDateTime(format: "Y-m-d")
     ... on blog_blogpost_Entry {
       commonIntro
-      blogImage {
-        small: url @transform (width: 600, height: 450, immediately: true)
-        medium: url @transform (width: 1024, height: 768, immediately: true)
-        large: url @transform (width: 1440, height: 1080, immediately: true)
-        title: title
-      }
-      commonIntro
       commonBody
+      blogImage {
+        title
+        small: url @transform(width: 600, height: 450, immediately: true)
+        medium: url @transform(width: 1024, height: 768, immediately: true)
+        large: url @transform(width: 1440, height: 1080, immediately: true)
+      }
     }
   }
 }
@@ -84,6 +81,7 @@ async function getAllBlogposts() {
 
     // format entries and return
     if (data.data.entries) {
+      // console.log(formatData(data.data.entries));
       return formatData(data.data.entries);
     }
   } catch (error) {
